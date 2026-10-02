@@ -3,6 +3,9 @@ import axios from "axios";
 import "./App.css";
 import ReactMarkdown from "react-markdown";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
+axios.defaults.baseURL = API_BASE_URL;
+
 // Maps status/priority/severity values used across every module
 // (Projects, Requirements, Tasks, Milestones, Test Cases, Bugs) to a
 // consistent colored pill, instead of plain text.
@@ -324,7 +327,7 @@ function App() {
 
   const loadDashboard = () => {
     axios
-      .get("http://localhost:8080/api/dashboard/summary")
+      .get("/api/dashboard/summary")
       .then((response) => {
         setSummary(response.data);
       })
@@ -337,7 +340,7 @@ function App() {
 
   const loadProjects = () => {
     axios
-      .get("http://localhost:8080/api/projects")
+      .get("/api/projects")
       .then((response) => {
         setProjects(response.data);
       })
@@ -408,7 +411,7 @@ function App() {
     if (editingProjectId !== null) {
       axios
         .put(
-          `http://localhost:8080/api/projects/${editingProjectId}`,
+          `/api/projects/${editingProjectId}`,
           projectData
         )
         .then((response) => {
@@ -434,7 +437,7 @@ function App() {
     }
 
     axios
-      .post("http://localhost:8080/api/projects", projectData)
+      .post("/api/projects", projectData)
       .then((response) => {
         setProjects((prevProjects) => [
           ...prevProjects,
@@ -462,7 +465,7 @@ function App() {
     }
 
     axios
-      .delete(`http://localhost:8080/api/projects/${projectId}`)
+      .delete(`/api/projects/${projectId}`)
       .then(() => {
         setProjects((prevProjects) =>
           prevProjects.filter(
@@ -557,7 +560,7 @@ function App() {
 
   const loadRequirements = () => {
     axios
-      .get("http://localhost:8080/api/requirements")
+      .get("/api/requirements")
       .then((response) => {
         setRequirements(response.data);
       })
@@ -644,7 +647,7 @@ function App() {
     if (editingRequirementId !== null) {
       axios
         .put(
-          `http://localhost:8080/api/requirements/${editingRequirementId}`,
+          `/api/requirements/${editingRequirementId}`,
           requirementData
         )
         .then((response) => {
@@ -675,7 +678,7 @@ function App() {
 
     axios
       .post(
-        "http://localhost:8080/api/requirements",
+        "/api/requirements",
         requirementData
       )
       .then((response) => {
@@ -710,7 +713,7 @@ function App() {
 
     axios
       .delete(
-        `http://localhost:8080/api/requirements/${requirementId}`
+        `/api/requirements/${requirementId}`
       )
       .then(() => {
         setRequirements((prevRequirements) =>
@@ -736,7 +739,7 @@ function App() {
 
   const loadTasks = () => {
     axios
-      .get("http://localhost:8080/api/tasks")
+      .get("/api/tasks")
       .then((response) => {
         setTasks(response.data);
       })
@@ -841,7 +844,7 @@ function App() {
     if (editingTaskId !== null) {
       axios
         .put(
-          `http://localhost:8080/api/tasks/${editingTaskId}`,
+          `/api/tasks/${editingTaskId}`,
           taskData
         )
         .then((response) => {
@@ -876,7 +879,7 @@ function App() {
     }
 
     axios
-      .post("http://localhost:8080/api/tasks", taskData)
+      .post("/api/tasks", taskData)
       .then((response) => {
         setTasks((prevTasks) => [
           ...prevTasks,
@@ -913,7 +916,7 @@ function App() {
     }
 
     axios
-      .delete(`http://localhost:8080/api/tasks/${taskId}`)
+      .delete(`/api/tasks/${taskId}`)
       .then(() => {
         setTasks((prevTasks) =>
           prevTasks.filter((task) => task.id !== taskId)
@@ -940,7 +943,7 @@ function App() {
 
   const loadMilestones = () => {
     axios
-      .get("http://localhost:8080/api/milestones")
+      .get("/api/milestones")
       .then((response) => {
         setMilestones(response.data);
       })
@@ -1042,7 +1045,7 @@ function App() {
     if (editingMilestoneId !== null) {
       axios
         .put(
-          `http://localhost:8080/api/milestones/${editingMilestoneId}`,
+          `/api/milestones/${editingMilestoneId}`,
           milestoneData
         )
         .then((response) => {
@@ -1082,7 +1085,7 @@ function App() {
 
     axios
       .post(
-        "http://localhost:8080/api/milestones",
+        "/api/milestones",
         milestoneData
       )
       .then((response) => {
@@ -1126,7 +1129,7 @@ function App() {
 
     axios
       .delete(
-        `http://localhost:8080/api/milestones/${milestoneId}`
+        `/api/milestones/${milestoneId}`
       )
       .then(() => {
         setMilestones((prevMilestones) =>
@@ -1163,7 +1166,7 @@ function App() {
 
   const loadTestCases = () => {
     axios
-      .get("http://localhost:8080/api/testcases")
+      .get("/api/testcases")
       .then((response) => {
         setTestCases(response.data);
       })
@@ -1272,7 +1275,7 @@ function App() {
     if (editingTestCaseId !== null) {
       axios
         .put(
-          `http://localhost:8080/api/testcases/${editingTestCaseId}`,
+          `/api/testcases/${editingTestCaseId}`,
           testCaseData
         )
         .then((response) => {
@@ -1312,7 +1315,7 @@ function App() {
 
     axios
       .post(
-        "http://localhost:8080/api/testcases",
+        "/api/testcases",
         testCaseData
       )
       .then((response) => {
@@ -1356,7 +1359,7 @@ function App() {
 
     axios
       .delete(
-        `http://localhost:8080/api/testcases/${testCaseId}`
+        `/api/testcases/${testCaseId}`
       )
       .then(() => {
         setTestCases((prevTestCases) =>
@@ -1393,7 +1396,7 @@ function App() {
 
   const loadBugs = () => {
     axios
-      .get("http://localhost:8080/api/bugs")
+      .get("/api/bugs")
       .then((response) => {
         setBugs(response.data);
       })
@@ -1530,7 +1533,7 @@ function App() {
     if (editingBugId !== null) {
       axios
         .put(
-          `http://localhost:8080/api/bugs/${editingBugId}`,
+          `/api/bugs/${editingBugId}`,
           bugData
         )
         .then((response) => {
@@ -1572,7 +1575,7 @@ function App() {
 
     axios
       .post(
-        "http://localhost:8080/api/bugs",
+        "/api/bugs",
         bugData
       )
       .then((response) => {
@@ -1616,7 +1619,7 @@ function App() {
 
     axios
       .delete(
-        `http://localhost:8080/api/bugs/${bugId}`
+        `/api/bugs/${bugId}`
       )
       .then(() => {
         setBugs((prevBugs) =>
@@ -1659,7 +1662,7 @@ function App() {
     setAiResult("");
 
     axios
-      .post("http://localhost:8080/api/ai/process", {
+      .post("/api/ai/process", {
         text: aiText
       })
       .then((response) => {
@@ -1710,21 +1713,21 @@ function App() {
 
       if (aiActionMode === "summarize-requirement") {
         response = await axios.post(
-          "http://localhost:8080/api/ai/summarize-requirement",
+          "/api/ai/summarize-requirement",
           {
             requirement: message,
           }
         );
       } else if (aiActionMode === "classify-bug") {
         response = await axios.post(
-          "http://localhost:8080/api/ai/classify-bug",
+          "/api/ai/classify-bug",
           {
             bugDescription: message,
           }
         );
       } else if (aiActionMode === "generate-test-cases") {
         response = await axios.post(
-          "http://localhost:8080/api/ai/generate-test-cases",
+          "/api/ai/generate-test-cases",
           {
             requirement: message,
           }
@@ -1737,7 +1740,7 @@ function App() {
         }
 
         const statusResponse = await axios.get(
-          `http://localhost:8080/api/ai/project-status/${projectId}`
+          `/api/ai/project-status/${projectId}`
         );
 
         const statusData = statusResponse.data || {};
@@ -1761,7 +1764,7 @@ function App() {
           `High/Critical Bugs: ${statusData.highSeverityBugs || 0}`;
 
         response = await axios.post(
-          "http://localhost:8080/api/ai/chat",
+          "/api/ai/chat",
           {
             message:
               "You are ProjectHub AI. Create a concise professional project status summary using ONLY the verified project metrics below. Do not invent dates, causes, risks, percentages or achievements. Include Project Status, Progress Summary, Quality Summary and Recommended Next Step.\n\n" +
@@ -1770,7 +1773,7 @@ function App() {
         );
       } else {
         response = await axios.post(
-          "http://localhost:8080/api/ai/chat",
+          "/api/ai/chat",
           {
             message: message,
           }
@@ -1825,7 +1828,7 @@ function App() {
     setLoginError("");
 
     axios
-      .post("http://localhost:8080/api/users/login", {
+      .post("/api/users/login", {
         email: loginEmail,
         password: loginPassword,
       })
@@ -1887,7 +1890,7 @@ function App() {
     setProfileSaving(true);
 
     axios
-      .put(`http://localhost:8080/api/users/${currentUser.id}`, {
+      .put(`/api/users/${currentUser.id}`, {
         name: profileName,
         email: profileEmail,
         role: currentUser.role,
@@ -1925,7 +1928,7 @@ function App() {
     }
 
     axios
-      .delete(`http://localhost:8080/api/users/${currentUser.id}`)
+      .delete(`/api/users/${currentUser.id}`)
       .then(() => {
         alert("Account deleted successfully.");
 
